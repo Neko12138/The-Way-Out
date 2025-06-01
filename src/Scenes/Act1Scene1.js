@@ -50,7 +50,7 @@ class Act1Scene1 extends Phaser.Scene {
 
 
         // set up player avatar
-        my.sprite.player = this.physics.add.sprite(game.config.width/8, game.config.height/4, "platformer_characters", "tile_0009.png").setScale(1)
+        my.sprite.player = this.physics.add.sprite(game.config.width/8, game.config.height/4, "man").setScale(2);
         my.sprite.player.setCollideWorldBounds(true);
 
         my.sprite.player.body.setMaxVelocity(150, 500); 
@@ -115,7 +115,7 @@ class Act1Scene1 extends Phaser.Scene {
         if(cursors.left.isDown) {
 
             my.sprite.player.setAccelerationX(-this.ACCELERATION);
-            my.sprite.player.resetFlip();
+            my.sprite.player.setFlip(true, false);
             my.sprite.player.anims.play('walk', true);
 
             my.vfx.walking.startFollow(my.sprite.player, my.sprite.player.displayWidth/2-10, my.sprite.player.displayHeight/2-1, false);
@@ -132,7 +132,7 @@ class Act1Scene1 extends Phaser.Scene {
 
         } else if(cursors.right.isDown) {
             my.sprite.player.setAccelerationX(this.ACCELERATION);
-            my.sprite.player.setFlip(true, false);
+            my.sprite.player.resetFlip();
             my.sprite.player.anims.play('walk', true);
 
             my.vfx.walking.startFollow(my.sprite.player, my.sprite.player.displayWidth/2-15, my.sprite.player.displayHeight/2-1, false);
@@ -151,7 +151,9 @@ class Act1Scene1 extends Phaser.Scene {
             // TODO: set acceleration to 0 and have DRAG take over
             my.sprite.player.body.setAccelerationX(0);
             my.sprite.player.body.setDragX(this.DRAG);
-            my.sprite.player.anims.play('idle');
+            if (my.sprite.player.body.blocked.down) {
+                my.sprite.player.anims.play('idle');
+            }
             my.vfx.walking.stop(); 
             my.vfx.jumping.stop();
 
@@ -171,6 +173,7 @@ class Act1Scene1 extends Phaser.Scene {
             if (my.sprite.player.body.blocked.down) {
                 my.sprite.player.body.setVelocityY(this.JUMP_VELOCITY);
                 my.vfx.walking.stop();  
+                my.sprite.player.anims.play('jump', true);
                 if (this.walkSoundPlaying) {
                     this.walkSound.stop();
                     this.walkSoundPlaying = false;
