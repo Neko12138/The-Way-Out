@@ -14,7 +14,11 @@ class Act1Scene1 extends Phaser.Scene {
         this.PARTICLE_VELOCITY = 50;
         this.dialogueFinished = false;
         this.savepoint1 = 0;
-        this.keyCount = 0;
+        this.Level1_keyCount = 0;
+        this.Level1_keyHas = false;
+        this.score = typeof my.score === 'number' ? my.score : 0;
+        this.timeLeft = typeof my.timeLeft === 'number' ? my.timeLeft : 300;
+
     }
 
     create() {
@@ -230,11 +234,14 @@ class Act1Scene1 extends Phaser.Scene {
             obj2.destroy(); 
             this.keySound.play();
 
-            this.keyCount++;
+            this.Level1_keyCount++;
 
-            if (this.keyCount >= 3) {
-                this.hasKey = true;
+            if (this.Level1_keyCount >= 3) {
+                this.Level1_keyHas = true;
             }
+
+            this.score += 100; 
+            this.scoreText.setText('Score: ' + this.score); 
         });
 
         //coin
@@ -242,6 +249,9 @@ class Act1Scene1 extends Phaser.Scene {
             this.coinSound.play();
             this.coinSoundPlaying = true;
             obj2.destroy(); 
+
+            this.score += 50; 
+            this.scoreText.setText('Score: ' + this.score); 
         });
 
         //save point
@@ -265,8 +275,7 @@ class Act1Scene1 extends Phaser.Scene {
 
         //Door
         this.physics.add.overlap(my.sprite.player, this.door, (obj1, obj2) => {
-            if (this.hasKey) {
-                
+            if (this.Level1_keyHas) {
             }
         });
 
@@ -295,10 +304,79 @@ class Act1Scene1 extends Phaser.Scene {
         });
 
         my.vfx.jumping.stop();
+
+        ////////////////////////////////////////////////////////////////////////UI SETting///////////////////////////////////////////
+
+        //create UI Layer
+        this.uiLayer = this.add.container(0, 0);
+
+        //Score
+        this.scoreText = this.add.text(10, 10, 'Score: 0', {
+            fontSize: '20px',
+            fill: '#ffffff',
+            stroke: '#000000',
+            strokeThickness: 3,
+            padding: { x: 10, y: 5 },
+            backgroundColor: '#00000066'
+        });
+        this.uiLayer.add(this.scoreText);
+
+        // Timer Text 
+        this.timerText = this.add.text(game.config.width - 150, 10, 'Time: 300', {
+            fontSize: '20px',
+            fill: '#ffffff',
+            stroke: '#000000',
+            strokeThickness: 3,
+            padding: { x: 10, y: 5 },
+            backgroundColor: '#00000066'
+        });
+        this.uiLayer.add(this.timerText);
+
+        // count down
+        this.timerEvent = this.time.addEvent({
+            delay: 1000,
+            callback: () => {
+                this.timeLeft--;
+                this.timerText.setText('Time: ' + this.timeLeft);
+
+                if (this.timeLeft <= 0) {
+                    this.timeLeft = 0;
+                    this.timerEvent.remove(); 
+                }
+            },
+            callbackScope: this,
+            loop: true
+        });
+
+        // make main cameras ignore UI
+        this.cameras.main.ignore(this.uiLayer);
+
+        // create a UI camera
+        this.uiCamera = this.cameras.add(0, 0, game.config.width, game.config.height);
+
+        // make camera ignore map
+        this.uiCamera.ignore(this.groundLayer);
+        this.uiCamera.ignore(this.backgroundLayer);
+
+        // make camera ignore things other than UI
+        this.uiCamera.ignore(my.sprite.player);
+        this.uiCamera.ignore(this.enemies);
+        this.uiCamera.ignore(this.keyGroup);
+        this.uiCamera.ignore(this.door);
+        this.uiCamera.ignore(this.coinGroup);
+        this.uiCamera.ignore(this.SaveP1);
+        this.uiCamera.ignore(this.b_mushroom);
+        this.uiCamera.ignore(this.npc);
+        this.uiCamera.ignore(this.dialogueBox);
+        this.uiCamera.ignore([my.sprite.player, my.vfx.walking, my.vfx.jumping]);
     }
 
     update() {
-            
+        //posit get (test only)
+        //console.log(my.sprite.player.x, my.sprite.player.y)
+        //console.log('Score:', this.score);
+
+        //player move
         if(cursors.left.isDown) {
 
             my.sprite.player.setAccelerationX(-this.ACCELERATION);
@@ -335,7 +413,6 @@ class Act1Scene1 extends Phaser.Scene {
             }
 
         } else {
-            // TODO: set acceleration to 0 and have DRAG take over
             my.sprite.player.body.setAccelerationX(0);
             my.sprite.player.body.setDragX(this.DRAG);
             if (my.sprite.player.body.blocked.down) {
@@ -384,7 +461,7 @@ class Act1Scene1 extends Phaser.Scene {
             my.sprite.player.body.setVelocity(0, 0); 
         }
 
-
+        //enemy move
         this.enemies.children.iterate((enemy) => {
             if (enemy && enemy.body) {
                 if (enemy.body.blocked.left) {

@@ -15,8 +15,8 @@
             "scale": 1,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 967,
-                "y": 315
+                "x": 977,
+                "y": 311
             }
         },
         "Level_1.tmj#rock_packed": {
@@ -54,11 +54,11 @@
             "scaleInDock": 1
         },
         "Level_2.tmj": {
-            "scale": 1.5,
+            "scale": 1,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 252,
-                "y": 1746
+                "x": 317,
+                "y": 1636
             }
         },
         "Level_2.tmj#rock_packed": {
@@ -77,8 +77,8 @@
             "scale": 0.6122222222222222,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 854.2649727767696,
-                "y": 197.64065335753173
+                "x": 855.0816696914701,
+                "y": 198.4573502722323
             }
         },
         "Level_3.tmj#rock_packed": {
@@ -140,10 +140,16 @@
     "map.tileWidth": 18,
     "map.width": 29,
     "openFiles": [
-        "Level_1.tmj"
+        "Level_1.tmj",
+        "Level_H.tmj",
+        "Level_2.tmj",
+        "Level_3.tmj"
     ],
     "project": "TheWayOutMap.tiled-project",
     "recentFiles": [
+        "Level_3.tmj",
+        "Level_2.tmj",
+        "Level_H.tmj",
         "Level_1.tmj",
         "Level_Unknow.tmj",
         "Level_1.tmx"
