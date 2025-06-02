@@ -20,7 +20,12 @@ let config = {
     },
     width: 1024,
     height: 768,
-    scene: [  Load, Act1Scene1, gameOver, gameStart, ini,]
+    scene: [ Load, Act1Scene1, gameOver, gameStart, ini ],  
+    plugins: {
+        scene: [
+            { key: 'AnimatedTiles', plugin: window.AnimatedTiles, mapping: 'animatedTiles' }
+        ]
+    }
 }
 
 var cursors;

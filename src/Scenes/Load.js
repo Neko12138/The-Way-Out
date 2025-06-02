@@ -4,6 +4,9 @@ class Load extends Phaser.Scene {
     }
 
     preload() {
+
+        this.load.scenePlugin('AnimatedTiles', './lib/AnimatedTiles.js', 'animatedTiles', 'animatedTiles');
+
         this.load.setPath("./assets/");
 
         // Load characters spritesheet
@@ -12,13 +15,14 @@ class Load extends Phaser.Scene {
         this.load.image("man_jump", "man_fall.png");
         this.load.image("man_walk1", "man_walk1.png");
         this.load.image("man_walk2", "man_walk2.png");
+        this.load.image("NPC_L1", "Level1NPC.png");
         // Load tilemap information
         this.load.image("tilemap_tiles", "tilemap_packed.png");
         this.load.image("tilemap_base", "tilemap_packed_base.png");
         this.load.image("tilemap_food", "tilemap_packed_food.png");
         this.load.image("tilemap_rock", "rock_packed.png");
          // Packed tilemap
-        this.load.tilemapTiledJSON("platformer-map", "Level_1.tmj");   // Tilemap in JSON
+        this.load.tilemapTiledJSON("Level1", "Level_1.tmj");   // Tilemap in JSON
         //this.load.tilemapTiledJSON("platformer-map", "TFR_Map.tmj");   // Tilemap in JSON
         //this.load.tilemapTiledJSON("platformer-map", "TFR_Map.tmj");   // Tilemap in JSON
         //this.load.tilemapTiledJSON("platformer-map", "TFR_Map.tmj");   // Tilemap in JSON
@@ -37,6 +41,12 @@ class Load extends Phaser.Scene {
         this.load.multiatlas("kenny-particles", "kenny-particles.json");
 
         this.load.audio('walk', 'walk.mp3');
+        this.load.audio('key', 'key.mp3');
+        this.load.audio('hurt', 'hurt.mp3');
+        this.load.audio('coin', 'coin.mp3');
+        this.load.audio('door', 'door.mp3');
+        this.load.audio('save', 'SP.mp3');
+        this.load.audio('debuff', 'mushroom.mp3');
 
     }
 
