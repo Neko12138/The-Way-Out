@@ -276,6 +276,13 @@ class Act1Scene1 extends Phaser.Scene {
         //Door
         this.physics.add.overlap(my.sprite.player, this.door, (obj1, obj2) => {
             if (this.Level1_keyHas) {
+                this.sound.stopAll();
+                this.scene.start('Transfer', {
+                    target: 'Act1Scene2',
+                    location: 'Stairs',
+                    score: this.score,
+                    timeLeft: this.timeLeft,
+                });
             }
         });
 

@@ -3,7 +3,7 @@ class Act1Scene2 extends Phaser.Scene {
         super("Act1Scene2");
     }
 
-    init() {
+    init(data) {
         // variables and settings
         this.ACCELERATION = 1500;
         this.DRAG = 2000;    // DRAG < ACCELERATION = icy slide
@@ -15,9 +15,9 @@ class Act1Scene2 extends Phaser.Scene {
         this.dialogueFinished = false;
         this.savepoint1 = 0;
         this.Level2_keyCount = 0;
-        this.Level2_keyHas = false;
-        this.score = typeof my.score === 'number' ? my.score : 0;
-        this.timeLeft = typeof my.timeLeft === 'number' ? my.timeLeft : 300;
+        this.Level2_keyHas = false;    
+        this.score = (data && typeof data.score === 'number') ? data.score : 0;
+        this.timeLeft = (data && typeof data.timeLeft === 'number') ? data.timeLeft : 300;
         this.armUp = false;
     }
 

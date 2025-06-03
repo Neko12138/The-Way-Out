@@ -1,6 +1,6 @@
-class Act1Scene2 extends Phaser.Scene {
+class Act1SceneUnknown extends Phaser.Scene {
     constructor() {
-        super("Act1Scene2");
+        super("Act1SceneUnknown");
     }
 
     init() {
@@ -14,11 +14,10 @@ class Act1Scene2 extends Phaser.Scene {
         this.PARTICLE_VELOCITY = 50;
         this.dialogueFinished = false;
         this.savepoint1 = 0;
-        this.Level2_keyCount = 0;
-        this.Level2_keyHas = false;
+        this.LevelH_keyCount = 0;
+        this.LevelH_keyHas = false;
         this.score = typeof my.score === 'number' ? my.score : 0;
         this.timeLeft = typeof my.timeLeft === 'number' ? my.timeLeft : 300;
-        this.armUp = false;
     }
 
     create() {
@@ -82,7 +81,6 @@ class Act1Scene2 extends Phaser.Scene {
         });
         this.physics.world.enable(this.door, Phaser.Physics.Arcade.STATIC_BODY);
 
-
         //key
         this.key = this.map.createFromObjects("obj", {
             name: "key",
@@ -107,42 +105,6 @@ class Act1Scene2 extends Phaser.Scene {
         //下面是测试出生点
         this.savePoint = { x: 456, y: 960};
         //NPC data create
-
-        // set up NPCavatar
-        this.npc = this.physics.add.staticSprite(185, 1932, 'NPC_L2').setScale(0.04).setFlipX(true);
-
-        this.npc.body.setSize(this.npc.width * 0.04, this.npc.height * 0.04);
-        this.npc.body.setOffset(290, 410); 
-
-        // text data & status
-        this.dialogue = [
-            "Hellow, there [SPACE]",
-            "Join The Helldiver[SPACE]",
-            "Protect the Super Earth![SPACE]",
-        ];
-        this.dialogueIndex = 0;
-        this.inDialogue = false;
-
-        // create Text
-        this.dialogueBox = this.add.text(0, 0, "", {
-            fontSize: '10px',
-            fill: '#ffffff',
-            padding: { x: 10, y: 5 },
-            wordWrap: { width: 300 }
-        }).setDepth(100).setVisible(false);
-
-        // the enemies
-        this.enemies = this.physics.add.group();
-        this.spawnEnemy(73, 1590);
-        this.spawnEnemy(271, 866);
-        this.spawnEnemy(355, 1230);
-        this.spawnEnemy(111, 438);
-        this.spawnEnemy(297, 438);
-        this.spawnEnemy(342, 366);
-        this.spawnEnemy(142, 366);
-        this.spawnEnemy(214, 294);
-
-        //The player
 
         // set up player avatar
         my.sprite.player = this.physics.add.sprite(this.savePoint.x, this.savePoint.y, "man").setScale(1.5);
@@ -173,61 +135,6 @@ class Act1Scene2 extends Phaser.Scene {
         // world edge
         this.physics.world.setBounds(0, 0, this.map.widthInPixels * 2.0, this.map.heightInPixels * 2.0);
 
-        // find & set deadWater
-        this.pWaterTiles = [];
-
-        this.backgroundLayer.forEachTile(tile => {
-            if (tile.properties.pWater) {
-                this.pWaterTiles.push(tile);
-            }
-        });
-
-        //NPC setting
-
-        // emit dialogue
-        this.physics.add.overlap(my.sprite.player, this.npc, () => {
-            if (!this.inDialogue && !this.dialogueFinished) {
-                this.inDialogue = true;
-                this.dialogueIndex = 0;
-                this.dialogueBox.setText(this.dialogue[this.dialogueIndex]);
-                this.dialogueBox.setPosition(131, 1902);
-                this.dialogueBox.setVisible(true);
-            }
-        }, null, this);
-
-        // space for next sentence
-        this.input.keyboard.on('keydown-SPACE', () => {
-            if (this.inDialogue) {
-                this.dialogueIndex++;
-                if (this.dialogueIndex >= this.dialogue.length) {
-                    this.dialogueBox.setVisible(false);
-                    this.inDialogue = false;
-                    this.dialogueFinished = true; 
-                } else {
-                    this.dialogueBox.setText(this.dialogue[this.dialogueIndex]);
-                }
-            }
-        });
-
-        //enemy collision
-        this.physics.add.collider(this.enemies, this.groundLayer, (enemy) => {
-            if (enemy.body.blocked.left) {
-                enemy.setVelocityX(50);
-                enemy.setFlipX(false);
-            } else if (enemy.body.blocked.right) {
-                enemy.setVelocityX(-50);
-                enemy.setFlipX(true);
-            }
-        });
-
-        this.physics.add.overlap(my.sprite.player, this.enemies, (player, enemy) => {
-            this.hurtSound.play();
-            if (!this.armUp) {
-                my.sprite.player.setPosition(this.savePoint.x, this.savePoint.y);
-            }
-            this.enemies.remove(enemy, true, true); 
-        });
-
         //item
         
         //key
@@ -254,40 +161,6 @@ class Act1Scene2 extends Phaser.Scene {
 
             this.score += 50; 
             this.scoreText.setText('Score: ' + this.score); 
-        });
-
-        //save point
-        this.physics.add.overlap(my.sprite.player, this.SaveP1, (obj1, obj2) => {
-            this.savePoint = { x: obj2.x, y: obj2.y};
-            if (this.savepoint1 === 0) {
-                this.saveSound.play();
-                this.savepoint1 = 1;
-            }
-            
-        });
-
-        //h enter
-        this.physics.add.overlap(my.sprite.player, this.h_Enter, (obj1, obj2) => {
-            //this.scene.start("Act1SceneUnknown");
-            
-        });
-
-        //debuff
-        this.physics.add.overlap(my.sprite.player, this.h_mushroom, (obj1, obj2) => {
-            obj2.destroy(); 
-            const bgText1 = this.add.text(60, 850, "↓ FAKE！", {
-            fontFamily: "Arial",
-            fontSize: "12px",
-            color: "#FFFFFF",
-            wordWrap: { width: 300 }
-            }).setOrigin(0); 
-        });
-
-        //armor
-        this.physics.add.overlap(my.sprite.player, this.armor, (obj1, obj2) => {
-            obj2.destroy(); 
-            console.log('real')
-            this.armUp = true;
         });
 
         //Door
@@ -377,16 +250,9 @@ class Act1Scene2 extends Phaser.Scene {
 
         // make camera ignore things other than UI
         this.uiCamera.ignore(my.sprite.player);
-        this.uiCamera.ignore(this.enemies);
         this.uiCamera.ignore(this.keyGroup);
         this.uiCamera.ignore(this.door);
         this.uiCamera.ignore(this.coinGroup);
-        this.uiCamera.ignore(this.SaveP1);
-        this.uiCamera.ignore(this.h_mushroom);
-        this.uiCamera.ignore(this.h_Enter);
-        this.uiCamera.ignore(this.npc);
-        this.uiCamera.ignore(this.dialogueBox);
-        this.uiCamera.ignore(this.armor);
         this.uiCamera.ignore([my.sprite.player, my.vfx.walking, my.vfx.jumping]);
     }
 
@@ -468,39 +334,7 @@ class Act1Scene2 extends Phaser.Scene {
                 my.vfx.walking.stop(); 
             }
         }
-
-
-        // check play if on water
-        let playerBottom = my.sprite.player.getBottomCenter();
-        let playerTile = this.backgroundLayer.getTileAtWorldXY(playerBottom.x, playerBottom.y + 1, true);
-
-        //move player back to respawn
-        if (playerTile && playerTile.properties.pWater) {
-            my.sprite.player.setPosition(this.savePoint.x, this.savePoint.y);
-            my.sprite.player.body.setVelocity(0, 0); 
-        }
-
-        //enemy move
-        this.enemies.children.iterate((enemy) => {
-            if (enemy && enemy.body) {
-                if (enemy.body.blocked.left) {
-                    enemy.setVelocityX(50);
-                    enemy.setFlipX(false); 
-                } else if (enemy.body.blocked.right) {
-                    enemy.setVelocityX(-50);
-                    enemy.setFlipX(true);  
-                }
-            }
-        });
-
         
     }
 
-    spawnEnemy(x, y) {
-            let enemy = this.enemies.create(x, y, 'man').setScale(1.5).setCollideWorldBounds(true);
-            enemy.setVelocityX(50);
-            enemy.setBounce(0);
-            enemy.setImmovable(true);
-            enemy.setFlipX(true);
-        }
 }
