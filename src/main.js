@@ -20,7 +20,7 @@ let config = {
     },
     width: 1024,
     height: 768,
-    scene: [ Load, Act1Scene1, gameOver, gameStart, ini ],  
+    scene: [ Load, Act1Scene1, Act1Scene2, gameOver, gameStart, ini ],  
     plugins: {
         scene: [
             { key: 'AnimatedTiles', plugin: window.AnimatedTiles, mapping: 'animatedTiles' }
@@ -32,7 +32,7 @@ var cursors;
 const SCALE = 2.0;
 var my = {
     score: 0,
-    timeLeft: 300,
+    timeLeft: 450,
     sprite: {},
     vfx: {}
 };

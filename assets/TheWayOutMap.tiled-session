@@ -3,11 +3,14 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "Level_1.tmj",
+    "activeFile": "Level_2.tmj",
     "expandedProjectPaths": [
         "."
     ],
     "fileStates": {
+        "": {
+            "scaleInEditor": 1
+        },
         "Level_1.tmj": {
             "expandedObjectLayers": [
                 3
@@ -15,8 +18,8 @@
             "scale": 1,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 977,
-                "y": 311
+                "x": 855.5,
+                "y": 197.5
             }
         },
         "Level_1.tmj#rock_packed": {
@@ -54,11 +57,14 @@
             "scaleInDock": 1
         },
         "Level_2.tmj": {
-            "scale": 1,
+            "expandedObjectLayers": [
+                3
+            ],
+            "scale": 1.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 317,
-                "y": 1636
+                "x": 277.33333333333326,
+                "y": 1067.3333333333333
             }
         },
         "Level_2.tmj#rock_packed": {
@@ -94,11 +100,14 @@
             "scaleInDock": 1
         },
         "Level_H.tmj": {
-            "scale": 2.0055555555555555,
-            "selectedLayer": 0,
+            "expandedObjectLayers": [
+                3
+            ],
+            "scale": 3,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 260.77562326869804,
-                "y": 197.95013850415512
+                "x": 261.16666666666663,
+                "y": 198.16666666666669
             }
         },
         "Level_H.tmj#rock_packed": {
@@ -147,10 +156,10 @@
     ],
     "project": "TheWayOutMap.tiled-project",
     "recentFiles": [
+        "Level_1.tmj",
+        "Level_H.tmj",
         "Level_3.tmj",
         "Level_2.tmj",
-        "Level_H.tmj",
-        "Level_1.tmj",
         "Level_Unknow.tmj",
         "Level_1.tmx"
     ],
