@@ -23,10 +23,11 @@ class Act1Scene1 extends Phaser.Scene {
 
     create() {
         ///////////////////////////////////////////////////////////////////Audio////////////////////////////////////////
+        
         //music
-        //this.playingMusic = this.sound.add('playing');
-        //this.playingMusic.play();
-        //this.playingMusic.setVolume(0.5);
+        this.playingMusic = this.sound.add('L1BGM');
+        this.playingMusic.play();
+        this.playingMusic.setVolume(0.5);
 
         //sound
         this.walkSound = this.sound.add('walk');
@@ -124,9 +125,13 @@ class Act1Scene1 extends Phaser.Scene {
 
         // text data & status
         this.dialogue = [
-            "Hellow, there [SPACE]",
-            "Join The Helldiver[SPACE]",
-            "Protect the Super Earth![SPACE]",
+            "Hey, you, finally awake.[SPACE]",
+            "The prison is full of enemies.[SPACE]",
+            "We stay and hold them back.[SPACE]",
+            "Be careful of those guards. [SPACE]",
+            "Then get the key and go to the stairs.[SPACE]",
+            "Remember, get those three and you're free[SPACE]",
+            "Go, go, William, go![SPACE]",
         ];
         this.dialogueIndex = 0;
         this.inDialogue = false;

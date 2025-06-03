@@ -48,6 +48,18 @@ class Load extends Phaser.Scene {
         this.load.audio('door', 'door.mp3');
         this.load.audio('save', 'SP.mp3');
         this.load.audio('debuff', 'mushroom.mp3');
+        
+        this.load.audio('L1BGM', 'L1BGM.mp3');
+        //this.load.audio('debuff', 'mushroom.mp3');
+        //this.load.audio('debuff', 'mushroom.mp3');
+        //this.load.audio('debuff', 'mushroom.mp3');
+        //this.load.audio('debuff', 'mushroom.mp3');
+        //this.load.audio('debuff', 'mushroom.mp3');
+        //this.load.audio('debuff', 'mushroom.mp3');
+        //this.load.audio('debuff', 'mushroom.mp3');
+        //this.load.audio('debuff', 'mushroom.mp3');
+        //this.load.audio('debuff', 'mushroom.mp3');
+        //this.load.audio('debuff', 'mushroom.mp3');
 
     }
 
