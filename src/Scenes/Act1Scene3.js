@@ -1,6 +1,6 @@
-class Act1Scene2 extends Phaser.Scene {
+class Act1Scene3 extends Phaser.Scene {
     constructor() {
-        super("Act1Scene2");
+        super("Act1Scene3");
     }
 
     init(data) {
@@ -50,7 +50,7 @@ class Act1Scene2 extends Phaser.Scene {
         
         ///The Map
         
-        this.map = this.make.tilemap({ key: "Level2" });
+        this.map = this.make.tilemap({ key: "Level_3" });
 
         let tileset1 = this.map.addTilesetImage("tilemap_packed", "tilemap_tiles");
         let tileset2 = this.map.addTilesetImage("tilemap_packed_base", "tilemap_base");
@@ -92,30 +92,6 @@ class Act1Scene2 extends Phaser.Scene {
         });
         this.physics.world.enable(this.SaveP1, Phaser.Physics.Arcade.STATIC_BODY);
 
-        //H mushroom
-        this.h_mushroom = this.map.createFromObjects("obj", {
-            name: "H_mushroom",
-            key: "tilemap_base_sheet",
-            frame: 108
-        });
-        this.physics.world.enable(this.h_mushroom, Phaser.Physics.Arcade.STATIC_BODY);
-        
-        //H Enter
-        this.h_Enter = this.map.createFromObjects("obj", {
-            name: "Enter",
-            key: "tilemap_base_sheet_2",
-            frame: 41
-        });
-        this.physics.world.enable(this.h_Enter, Phaser.Physics.Arcade.STATIC_BODY);
-
-        //key
-        this.key = this.map.createFromObjects("obj", {
-            name: "key",
-            key: "tilemap_base_sheet",
-            frame: 27
-        });
-        this.physics.world.enable(this.key, Phaser.Physics.Arcade.STATIC_BODY);
-        this.keyGroup = this.add.group(this.key);
 
         //coins
         this.coins = this.map.createFromObjects("obj", {
@@ -130,11 +106,11 @@ class Act1Scene2 extends Phaser.Scene {
         //下面为初始出生点
         //this.savePoint = { x: 76, y: 1932};
         //下面是测试出生点
-        this.savePoint = { x: 456, y: 960};
+        this.savePoint = { x: 10392, y: 348};
         //NPC data create
 
         // set up NPCavatar
-        this.npc = this.physics.add.staticSprite(185, 1932, 'NPC_L2').setScale(0.04).setFlipX(true);
+        this.npc = this.physics.add.staticSprite(10194, 348, 'NPC_L2').setScale(0.04);
 
         this.npc.body.setSize(this.npc.width * 0.04, this.npc.height * 0.04);
         this.npc.body.setOffset(290, 410); 
@@ -159,13 +135,7 @@ class Act1Scene2 extends Phaser.Scene {
         // the enemies
         this.enemies = this.physics.add.group();
         this.spawnEnemy(73, 1590);
-        this.spawnEnemy(271, 866);
-        this.spawnEnemy(355, 1230);
-        this.spawnEnemy(111, 438);
-        this.spawnEnemy(297, 438);
-        this.spawnEnemy(342, 366);
-        this.spawnEnemy(142, 366);
-        this.spawnEnemy(214, 294);
+
 
         //The player
 
@@ -254,22 +224,7 @@ class Act1Scene2 extends Phaser.Scene {
         });
 
         //item
-        
-        //key
-        this.physics.add.overlap(my.sprite.player, this.keyGroup, (obj1, obj2) => {
-            obj2.destroy(); 
-            this.keySound.play();
 
-            this.Level2_keyCount++;
-
-            if (this.Level2_keyCount >= 3) {
-                this.Level2_keyHas = true;
-                this.savePoint = { x: 154, y: 125};
-            }
-
-            this.score += 100; 
-            this.scoreText.setText('Score: ' + this.score); 
-        });
 
         //coin
         this.physics.add.overlap(my.sprite.player, this.coinGroup, (obj1, obj2) => {
@@ -291,34 +246,6 @@ class Act1Scene2 extends Phaser.Scene {
             
         });
 
-        //h enter
-        this.physics.add.overlap(my.sprite.player, this.h_Enter, (obj1, obj2) => {
-            this.sound.stopAll();
-            this.scene.start('Transfer', {
-                target: 'Act1SceneUnknown',
-                location: '? ? ?',
-                score: this.score,
-                timeLeft: this.timeLeft,
-            });
-        });
-
-        //debuff
-        this.physics.add.overlap(my.sprite.player, this.h_mushroom, (obj1, obj2) => {
-            obj2.destroy(); 
-            const bgText1 = this.add.text(60, 850, "↓ FAKE！", {
-            fontFamily: "Arial",
-            fontSize: "12px",
-            color: "#FFFFFF",
-            wordWrap: { width: 300 }
-            }).setOrigin(0); 
-        });
-
-        //armor
-        this.physics.add.overlap(my.sprite.player, this.armor, (obj1, obj2) => {
-            obj2.destroy(); 
-            console.log('real')
-            this.armUp = true;
-        });
 
         //Door
         this.physics.add.overlap(my.sprite.player, this.door, (obj1, obj2) => {
@@ -417,21 +344,17 @@ class Act1Scene2 extends Phaser.Scene {
         // make camera ignore things other than UI
         this.uiCamera.ignore(my.sprite.player);
         this.uiCamera.ignore(this.enemies);
-        this.uiCamera.ignore(this.keyGroup);
         this.uiCamera.ignore(this.door);
         this.uiCamera.ignore(this.coinGroup);
         this.uiCamera.ignore(this.SaveP1);
-        this.uiCamera.ignore(this.h_mushroom);
-        this.uiCamera.ignore(this.h_Enter);
         this.uiCamera.ignore(this.npc);
         this.uiCamera.ignore(this.dialogueBox);
-        this.uiCamera.ignore(this.armor);
         this.uiCamera.ignore([my.sprite.player, my.vfx.walking, my.vfx.jumping]);
     }
 
     update() {
         //posit get (test only)
-        //console.log(my.sprite.player.x, my.sprite.player.y)
+        console.log(my.sprite.player.x, my.sprite.player.y)
         //console.log('Score:', this.score);
 
         //player move

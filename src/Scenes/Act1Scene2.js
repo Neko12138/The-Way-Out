@@ -312,6 +312,9 @@ class Act1Scene2 extends Phaser.Scene {
             color: "#FFFFFF",
             wordWrap: { width: 300 }
             }).setOrigin(0); 
+            
+            this.debuffSound.play();
+            this.debuffSoundPlaying = true;
         });
 
         //armor

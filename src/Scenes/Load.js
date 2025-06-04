@@ -27,7 +27,7 @@ class Load extends Phaser.Scene {
         this.load.tilemapTiledJSON("Level1", "Level_1.tmj");   // Tilemap in JSON
         this.load.tilemapTiledJSON("Level2", "Level_2.tmj");   // Tilemap in JSON
         this.load.tilemapTiledJSON("Level_H", "Level_H.tmj");   // Tilemap in JSON
-        //this.load.tilemapTiledJSON("platformer-map", "TFR_Map.tmj");   // Tilemap in JSON
+        this.load.tilemapTiledJSON("Level_3", "Level_3.tmj");   // Tilemap in JSON
         
 
         this.load.spritesheet("tilemap_base_sheet", "tilemap_packed_base.png", {
@@ -88,7 +88,7 @@ class Load extends Phaser.Scene {
             frames: [{ key: 'man_jump' }],
         });
 
-         this.scene.start("Act1Scene2");
+         this.scene.start("Act1Scene3");
     }
 
     update() {
