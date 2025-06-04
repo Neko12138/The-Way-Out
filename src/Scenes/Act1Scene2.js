@@ -348,7 +348,7 @@ class Act1Scene2 extends Phaser.Scene {
 
         my.vfx.jumping.stop();
 
-        ////////////////////////////////////////////////////////////////////////UI SETting///////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////UI SETting////////////////////////////////////////////////////////////////
 
         //create UI Layer
         this.uiLayer = this.add.container(0, 0);
@@ -523,7 +523,7 @@ class Act1Scene2 extends Phaser.Scene {
     }
 
     spawnEnemy(x, y) {
-            let enemy = this.enemies.create(x, y, 'man').setScale(1.5).setCollideWorldBounds(true);
+            let enemy = this.enemies.create(x, y, 'enemy').setScale(1.5).setCollideWorldBounds(true);
             enemy.setVelocityX(50);
             enemy.setBounce(0);
             enemy.setImmovable(true);

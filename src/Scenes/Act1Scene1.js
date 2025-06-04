@@ -3,7 +3,7 @@ class Act1Scene1 extends Phaser.Scene {
         super("Act1Scene1");
     }
 
-    init() {
+    init(data) {
         // variables and settings
         this.ACCELERATION = 1500;
         this.DRAG = 2000;    // DRAG < ACCELERATION = icy slide
@@ -16,14 +16,14 @@ class Act1Scene1 extends Phaser.Scene {
         this.savepoint1 = 0;
         this.Level1_keyCount = 0;
         this.Level1_keyHas = false;
-        this.score = typeof my.score === 'number' ? my.score : 0;
-        this.timeLeft = typeof my.timeLeft === 'number' ? my.timeLeft : 300;
+        this.score = (data && typeof data.score === 'number') ? data.score : 0;
+        this.timeLeft = (data && typeof data.timeLeft === 'number') ? data.timeLeft : 300;
 
     }
 
     create() {
         ///////////////////////////////////////////////////////////////////Audio////////////////////////////////////////
-        
+
         //music
         this.playingMusic = this.sound.add('L1BGM');
         this.playingMusic.play();
@@ -354,6 +354,8 @@ class Act1Scene1 extends Phaser.Scene {
                 if (this.timeLeft <= 0) {
                     this.timeLeft = 0;
                     this.timerEvent.remove(); 
+                    this.sound.stopAll();
+                    this.scene.start('gameOverL');
                 }
             },
             callbackScope: this,
@@ -490,7 +492,7 @@ class Act1Scene1 extends Phaser.Scene {
     }
 
     spawnEnemy(x, y) {
-            let enemy = this.enemies.create(x, y, 'man').setScale(1.5).setCollideWorldBounds(true);
+            let enemy = this.enemies.create(x, y, 'enemy').setScale(1.5).setCollideWorldBounds(true);
             enemy.setVelocityX(50);
             enemy.setBounce(0);
             enemy.setImmovable(true);

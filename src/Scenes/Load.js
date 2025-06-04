@@ -17,6 +17,7 @@ class Load extends Phaser.Scene {
         this.load.image("man_walk2", "man_walk2.png");
         this.load.image("NPC_L1", "Level1NPC.png");
         this.load.image("NPC_L2", "Level2NPC.png");
+        this.load.image("enemy", "enemy.png");
         // Load tilemap information
         this.load.image("tilemap_tiles", "tilemap_packed.png");
         this.load.image("tilemap_base", "tilemap_packed_base.png");
@@ -50,7 +51,7 @@ class Load extends Phaser.Scene {
         this.load.audio('debuff', 'mushroom.mp3');
         
         this.load.audio('L1BGM', 'L1BGM.mp3');
-        //this.load.audio('debuff', 'mushroom.mp3');
+        this.load.audio('gameOverL', 'gameOverL.mp3');
         //this.load.audio('debuff', 'mushroom.mp3');
         //this.load.audio('debuff', 'mushroom.mp3');
         //this.load.audio('debuff', 'mushroom.mp3');
@@ -87,7 +88,7 @@ class Load extends Phaser.Scene {
             frames: [{ key: 'man_jump' }],
         });
 
-         this.scene.start("Act1Scene1");
+         this.scene.start("gameOverL");
     }
 
     update() {

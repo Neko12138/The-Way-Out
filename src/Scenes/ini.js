@@ -27,6 +27,7 @@ class ini extends Phaser.Scene {
 
         this.input.keyboard.on('keydown-SPACE', () => {
             this.scene.start("loadScene");
+            
         });
 
     }
