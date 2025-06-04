@@ -9,8 +9,8 @@ class gameStart extends Phaser.Scene {
 
     create() {
 
-        this.bgm = this.sound.add("opening", { loop: true });
-        this.bgm.play();
+        //this.bgm = this.sound.add("opening", { loop: true });
+        //this.bgm.play();
 
         const centerX = this.cameras.main.width / 2;
         const centerY = this.cameras.main.height / 2;

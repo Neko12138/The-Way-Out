@@ -65,7 +65,7 @@ class Act1Scene3 extends Phaser.Scene {
         this.boss.flipX = true;
         this.boss.setScale(0.5);                                 
         //this.boss.setVelocityX(-50);              
-        this.boss.setVelocityX(-5009);                   
+        this.boss.setVelocityX(-2500);                   
         this.boss.setImmovable(true);
         this.boss.body.allowGravity = false;                      
         this.boss.body.setSize(this.boss.width, this.boss.height); // 可选：根据图像大小设置碰撞箱
@@ -77,7 +77,7 @@ class Act1Scene3 extends Phaser.Scene {
         this.door = this.map.createFromObjects("obj", {
             name: "door",
             key: "tilemap_base_sheet_2",
-            frame: 28
+            frame: 44
         });
         this.physics.world.enable(this.door, Phaser.Physics.Arcade.STATIC_BODY);
 
@@ -95,8 +95,8 @@ class Act1Scene3 extends Phaser.Scene {
         //下面为初始出生点
         //this.savePoint = { x: 10392, y: 348};
         //下面是测试出生点
-        this.savePoint = { x: 10027, y: 338};
-        //this.savePoint = { x: 427, y: 338};
+        //this.savePoint = { x: 10027, y: 338};
+        this.savePoint = { x: 427, y: 338};
         //NPC data create
 
         // set up NPCavatar
@@ -191,6 +191,12 @@ class Act1Scene3 extends Phaser.Scene {
             }
         });
 
+        this.physics.add.overlap(my.sprite.player, this.boss, () => {
+            this.sound.stopAll();
+            this.scene.start('gameOverL', {
+                target: 'Act1Scene3'
+            });
+        }, null, this);
 
         //item
 
@@ -204,15 +210,11 @@ class Act1Scene3 extends Phaser.Scene {
 
         //Door
         this.physics.add.overlap(my.sprite.player, this.door, (obj1, obj2) => {
-            if (this.Level2_keyHas) {
-                this.sound.stopAll();
-                this.scene.start('Transfer', {
-                    target: 'Act1Scene3',
-                    location: 'Main Entrance',
-                    score: this.score,
-                    timeLeft: this.timeLeft,
-                });
-            }
+            this.sound.stopAll();
+            this.scene.start('gameOverW', {
+                target: 'gameStart',
+                score: this.score,
+            });
         });
 
         //vfx
