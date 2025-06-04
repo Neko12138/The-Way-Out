@@ -1,6 +1,6 @@
 class Transfer extends Phaser.Scene {
     constructor() {
-        super('Transfer'); // 场景 key 也是 transfer
+        super('Transfer');
     }
 
     init(data) {

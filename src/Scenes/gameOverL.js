@@ -4,7 +4,7 @@ class gameOverL extends Phaser.Scene {
     }
 
     init(data) {
-
+        this.targetScene = data?.target || 'X';         
     }
 
     create() {
@@ -49,7 +49,7 @@ class gameOverL extends Phaser.Scene {
 
     update() {
         if (Phaser.Input.Keyboard.JustDown(this.keys.restart)) {
-            this.scene.start("Act1Scene1", {
+            this.scene.start(this.targetScene, {
                 score: 0,
                 timeLeft: 300
             });

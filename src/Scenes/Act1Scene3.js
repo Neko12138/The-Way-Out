@@ -104,9 +104,9 @@ class Act1Scene3 extends Phaser.Scene {
 
         //set up savePoint
         //下面为初始出生点
-        //this.savePoint = { x: 76, y: 1932};
+        //this.savePoint = { x: 10392, y: 348};
         //下面是测试出生点
-        this.savePoint = { x: 10392, y: 348};
+        this.savePoint = { x: 10027, y: 338};
         //NPC data create
 
         // set up NPCavatar
@@ -324,7 +324,9 @@ class Act1Scene3 extends Phaser.Scene {
                     this.timeLeft = 0;
                     this.timerEvent.remove(); 
                     this.sound.stopAll();
-                    this.scene.start('gameOverL');
+                    this.scene.start('gameOverL', {
+                        target: 'Act1Scene3',
+                    });
                 }
             },
             callbackScope: this,

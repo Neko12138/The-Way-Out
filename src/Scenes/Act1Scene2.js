@@ -413,7 +413,9 @@ class Act1Scene2 extends Phaser.Scene {
                     this.timeLeft = 0;
                     this.timerEvent.remove(); 
                     this.sound.stopAll();
-                    this.scene.start('gameOverL');
+                    this.scene.start('gameOverL', {
+                        target: 'Act1Scene2',
+                    });
                 }
             },
             callbackScope: this,

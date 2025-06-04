@@ -63,8 +63,8 @@
             "scale": 1.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 261,
-                "y": 990.3333333333333
+                "x": 277.33333333333326,
+                "y": 1859.3333333333333
             }
         },
         "Level_2.tmj#rock_packed": {
@@ -81,11 +81,11 @@
             "scaleInDock": 1
         },
         "Level_3.tmj": {
-            "scale": 1.5,
-            "selectedLayer": 1,
+            "scale": 1,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 1342,
-                "y": 222.66666666666666
+                "x": 9575,
+                "y": 183
             }
         },
         "Level_3.tmj#rock_packed": {
