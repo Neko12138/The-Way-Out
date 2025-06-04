@@ -24,9 +24,9 @@ class Act1Scene2 extends Phaser.Scene {
     create() {
         ///////////////////////////////////////////////////////////////////Audio////////////////////////////////////////
         //music
-        //this.playingMusic = this.sound.add('playing');
-        //this.playingMusic.play();
-        //this.playingMusic.setVolume(0.5);
+        this.playingMusic = this.sound.add('L2BGM');
+        this.playingMusic.play();
+        this.playingMusic.setVolume(0.5);
 
         //sound
         this.walkSound = this.sound.add('walk');
@@ -46,6 +46,9 @@ class Act1Scene2 extends Phaser.Scene {
 
         this.debuffSound = this.sound.add('debuff');
         this.debuffSoundPlaying = false;
+
+        this.armorSound = this.sound.add('armor');
+        this.armorSoundPlaying = false;
 
         /////////////////////////////////////////////////////////////////////////////Create Object(or anything)/////////////////////////////////////////
         
@@ -128,23 +131,31 @@ class Act1Scene2 extends Phaser.Scene {
         this.coinGroup = this.add.group(this.coins);
 
         //set up savePoint
-        //下面为初始出生点
-        //this.savePoint = { x: 76, y: 1932};
-        //下面是测试出生点
-        this.savePoint = { x: 456, y: 960};
+        this.savePoint = { x: 76, y: 1932};
+
         //NPC data create
 
         // set up NPCavatar
-        this.npc = this.physics.add.staticSprite(185, 1932, 'NPC_L2').setScale(0.04).setFlipX(true);
+        this.npc = this.physics.add.staticSprite(185, 1930, 'NPC_L2').setScale(0.04).setFlipX(true);
 
         this.npc.body.setSize(this.npc.width * 0.04, this.npc.height * 0.04);
         this.npc.body.setOffset(290, 410); 
 
         // text data & status
         this.dialogue = [
-            "Hellow, there [SPACE]",
-            "Join The Helldiver[SPACE]",
-            "Protect the Super Earth![SPACE]",
+            "You are late.[SPACE]",
+            "But we still have time.[SPACE]",
+            "Now we have two ways out.[SPACE]",
+            "One is to climb up,[SPACE]",
+            "We have blasted a road.[SPACE]",
+            "But be aware that there will be more enemy.[SPACE]",
+            "Same, get those three and you're free[SPACE]",
+            "The other path only exists in the intelligence.[SPACE]",
+            "No one knows where it is, [SPACE]",
+            "Only the warden here has been there.[SPACE]",
+            "But there is enough evidence and it is safe enough.[SPACE]",
+            "Which road you choose is up to you.[SPACE]",
+            "We still have job to do.[SPACE]",
         ];
         this.dialogueIndex = 0;
         this.inDialogue = false;
@@ -216,7 +227,7 @@ class Act1Scene2 extends Phaser.Scene {
                 this.inDialogue = true;
                 this.dialogueIndex = 0;
                 this.dialogueBox.setText(this.dialogue[this.dialogueIndex]);
-                this.dialogueBox.setPosition(131, 1902);
+                this.dialogueBox.setPosition(101, 1902);
                 this.dialogueBox.setVisible(true);
             }
         }, null, this);
@@ -320,8 +331,9 @@ class Act1Scene2 extends Phaser.Scene {
         //armor
         this.physics.add.overlap(my.sprite.player, this.armor, (obj1, obj2) => {
             obj2.destroy(); 
-            console.log('real')
             this.armUp = true;
+            this.armorSound.play();
+            this.armorSoundPlaying = true;
         });
 
         //Door
@@ -435,8 +447,6 @@ class Act1Scene2 extends Phaser.Scene {
 
     update() {
         //posit get (test only)
-        //console.log(my.sprite.player.x, my.sprite.player.y)
-        //console.log('Score:', this.score);
 
         //player move
         if(cursors.left.isDown) {

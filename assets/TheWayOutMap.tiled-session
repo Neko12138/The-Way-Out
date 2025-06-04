@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "Level_2.tmj",
+    "activeFile": "Level_3.tmj",
     "expandedProjectPaths": [
         "."
     ],
@@ -63,15 +63,16 @@
             "scale": 1.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 277.33333333333326,
-                "y": 1859.3333333333333
+                "x": 261,
+                "y": 990.3333333333333
             }
         },
         "Level_2.tmj#rock_packed": {
             "scaleInDock": 1
         },
         "Level_2.tmj#tilemap_packed": {
-            "scaleInDock": 1
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "Level_2.tmj#tilemap_packed_base": {
             "scaleInDock": 1
@@ -83,8 +84,8 @@
             "scale": 1.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 10421.333333333332,
-                "y": 310.66666666666663
+                "x": 1342,
+                "y": 222.66666666666666
             }
         },
         "Level_3.tmj#rock_packed": {
@@ -106,8 +107,8 @@
             "scale": 1.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 225.3333333333333,
-                "y": 194.66666666666666
+                "x": 261,
+                "y": 198.33333333333331
             }
         },
         "Level_H.tmj#rock_packed": {
@@ -158,8 +159,8 @@
     "recentFiles": [
         "Level_1.tmj",
         "Level_H.tmj",
-        "Level_3.tmj",
         "Level_2.tmj",
+        "Level_3.tmj",
         "Level_Unknow.tmj",
         "Level_1.tmx"
     ],

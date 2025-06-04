@@ -49,11 +49,12 @@ class Load extends Phaser.Scene {
         this.load.audio('door', 'door.mp3');
         this.load.audio('save', 'SP.mp3');
         this.load.audio('debuff', 'mushroom.mp3');
+        this.load.audio('armor', 'armor.mp3');
         
         this.load.audio('L1BGM', 'L1BGM.mp3');
         this.load.audio('gameOverL', 'gameOverL.mp3');
         this.load.audio('LH_BGM', 'LH_BGM.mp3');
-        //this.load.audio('debuff', 'mushroom.mp3');
+        this.load.audio('L2BGM', 'L2BGM.mp3');
         //this.load.audio('debuff', 'mushroom.mp3');
         //this.load.audio('debuff', 'mushroom.mp3');
         //this.load.audio('debuff', 'mushroom.mp3');
@@ -88,7 +89,7 @@ class Load extends Phaser.Scene {
             frames: [{ key: 'man_jump' }],
         });
 
-         this.scene.start("Act1Scene3");
+         this.scene.start("Act1Scene2");
     }
 
     update() {

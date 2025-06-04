@@ -159,7 +159,13 @@ class Act1SceneUnknown extends Phaser.Scene {
         //Door
         this.physics.add.overlap(my.sprite.player, this.door, (obj1, obj2) => {
             if (this.LevelH_keyHas) {
-                console.log('成功设置，转移待定')
+                this.sound.stopAll();
+                this.scene.start('Transfer', {
+                    target: 'Act1Scene3',
+                    location: 'Main Entrance',
+                    score: this.score,
+                    timeLeft: this.timeLeft,
+                });
             }
         });
 
