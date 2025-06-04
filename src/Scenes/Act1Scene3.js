@@ -20,9 +20,9 @@ class Act1Scene3 extends Phaser.Scene {
     create() {
         ///////////////////////////////////////////////////////////////////Audio////////////////////////////////////////
         //music
-        //this.playingMusic = this.sound.add('playing');
-        //this.playingMusic.play();
-        //this.playingMusic.setVolume(0.5);
+        this.loadingMusic = this.sound.add('L3Loading', { loop: true, volume: 0.5 });
+        this.playingMusic = this.sound.add('L3Playing', { loop: true, volume: 0.5 });
+        this.loadingMusic.play();
 
         //sound
         this.walkSound = this.sound.add('walk');
@@ -60,15 +60,13 @@ class Act1Scene3 extends Phaser.Scene {
 
         this.animatedTiles.init(this.map);    
 
-        // BOSS creat
-        this.boss = this.physics.add.sprite(10320, 215, 'boss');  
+        // BOSS create
+        this.boss = this.physics.add.sprite(10620, 215, 'boss');  
         this.boss.flipX = true;
-        this.boss.setScale(0.5);                                 
-        //this.boss.setVelocityX(-50);              
-        this.boss.setVelocityX(-2500);                   
+        this.boss.setScale(0.5);                  
         this.boss.setImmovable(true);
         this.boss.body.allowGravity = false;                      
-        this.boss.body.setSize(this.boss.width, this.boss.height); // 可选：根据图像大小设置碰撞箱
+        this.boss.body.setSize(this.boss.width, this.boss.height); 
         
 
         ///Object that player can get 
@@ -92,24 +90,29 @@ class Act1Scene3 extends Phaser.Scene {
 
 
         //set up savePoint
-        //下面为初始出生点
-        //this.savePoint = { x: 10392, y: 348};
-        //下面是测试出生点
-        //this.savePoint = { x: 10027, y: 338};
-        this.savePoint = { x: 427, y: 338};
+        this.savePoint = { x: 10392, y: 348};
+
         //NPC data create
 
         // set up NPCavatar
-        this.npc = this.physics.add.staticSprite(10194, 348, 'NPC_L3').setScale(0.04);
+        this.npc = this.physics.add.staticSprite(10194, 343, 'NPC_L3').setScale(0.04);
 
         this.npc.body.setSize(this.npc.width * 0.04, this.npc.height * 0.04);
         this.npc.body.setOffset(290, 410); 
 
         // text data & status
         this.dialogue = [
-            "Hellow, there [SPACE]",
-            "Join The Helldiver[SPACE]",
-            "Protect the Super Earth![SPACE]",
+            "You are finally here,[SPACE]",
+            "Hopefully, we've done enough damage to destroy this place.[SPACE]",
+            "After I finish this job, I will retire.[SPACE]",
+            "I used to be an agent like you, [SPACE]",
+            "then I took a shot in the knee.[SPACE]",
+            "Wait, what's that sound?[SPACE]",
+            "War Machine![SPACE]",
+            "It will kill us all.[SPACE]",
+            "Why are there war machines here?[SPACE]",
+            "Run, I'll buy you some time.[SPACE]",
+            "Run, William! Run![SPACE]",
         ];
         this.dialogueIndex = 0;
         this.inDialogue = false;
@@ -172,7 +175,7 @@ class Act1Scene3 extends Phaser.Scene {
                 this.inDialogue = true;
                 this.dialogueIndex = 0;
                 this.dialogueBox.setText(this.dialogue[this.dialogueIndex]);
-                this.dialogueBox.setPosition(131, 1902);
+                this.dialogueBox.setPosition(10101, 310);
                 this.dialogueBox.setVisible(true);
             }
         }, null, this);
@@ -185,6 +188,14 @@ class Act1Scene3 extends Phaser.Scene {
                     this.dialogueBox.setVisible(false);
                     this.inDialogue = false;
                     this.dialogueFinished = true; 
+
+                    if (this.loadingMusic && this.loadingMusic.isPlaying) {
+                        this.loadingMusic.stop();
+                    }
+                    this.playingMusic.play();
+
+                    my.sprite.player.setPosition(10027, 338);
+                    my.sprite.player.body.setVelocity(0, 0);
                 } else {
                     this.dialogueBox.setText(this.dialogue[this.dialogueIndex]);
                 }
@@ -204,7 +215,6 @@ class Act1Scene3 extends Phaser.Scene {
         //save point
         this.physics.add.overlap(my.sprite.player, this.saveGroup, (player, savePoint) => {
             this.savePoint = { x: savePoint.x, y: savePoint.y };
-            this.saveSound.play();
         });
 
 
@@ -292,12 +302,16 @@ class Act1Scene3 extends Phaser.Scene {
     }
 
     update() {
-        if (this.boss.x < 495) {
-            this.boss.setVelocityX(0);
+        //boss move
+        if (!this.dialogueFinished) {
+            this.boss.setVelocityX(0); 
+        } else {
+            if (this.boss.x >= 495) {
+                this.boss.setVelocityX(-75); 
+            } else {
+                this.boss.setVelocityX(0);
+            }
         }
-        //posit get (test only)
-        console.log(my.sprite.player.x, my.sprite.player.y)
-        //console.log('Score:', this.score);
 
         //player move
         if(cursors.left.isDown) {
