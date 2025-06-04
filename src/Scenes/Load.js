@@ -17,7 +17,9 @@ class Load extends Phaser.Scene {
         this.load.image("man_walk2", "man_walk2.png");
         this.load.image("NPC_L1", "Level1NPC.png");
         this.load.image("NPC_L2", "Level2NPC.png");
+        this.load.image("NPC_L3", "Level3NPC.png");
         this.load.image("enemy", "enemy.png");
+        this.load.image('boss', 'Level3Enemy.png');
         // Load tilemap information
         this.load.image("tilemap_tiles", "tilemap_packed.png");
         this.load.image("tilemap_base", "tilemap_packed_base.png");

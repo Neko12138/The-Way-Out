@@ -13,9 +13,6 @@ class Act1Scene3 extends Phaser.Scene {
         this.canDoubleJump = false;
         this.PARTICLE_VELOCITY = 50;
         this.dialogueFinished = false;
-        this.savepoint1 = 0;
-        this.Level3_keyCount = 0;
-        this.Level3_keyHas = false;    
         this.score = (data && typeof data.score === 'number') ? data.score : 0;
         this.timeLeft = (data && typeof data.timeLeft === 'number') ? data.timeLeft : 300;
     }
@@ -34,9 +31,6 @@ class Act1Scene3 extends Phaser.Scene {
         this.keySound = this.sound.add('key');
         this.keySoundPlaying = false;
 
-        this.coinSound = this.sound.add('coin');
-        this.coinSoundPlaying = false;
-
         this.hurtSound = this.sound.add('hurt');
         this.hurtSoundPlaying = false;
 
@@ -47,7 +41,7 @@ class Act1Scene3 extends Phaser.Scene {
         this.debuffSoundPlaying = false;
 
         /////////////////////////////////////////////////////////////////////////////Create Object(or anything)/////////////////////////////////////////
-        
+
         ///The Map
         
         this.map = this.make.tilemap({ key: "Level_3" });
@@ -66,6 +60,17 @@ class Act1Scene3 extends Phaser.Scene {
 
         this.animatedTiles.init(this.map);    
 
+        // BOSS creat
+        this.boss = this.physics.add.sprite(10320, 215, 'boss');  
+        this.boss.flipX = true;
+        this.boss.setScale(0.5);                                 
+        //this.boss.setVelocityX(-50);              
+        this.boss.setVelocityX(-5009);                   
+        this.boss.setImmovable(true);
+        this.boss.body.allowGravity = false;                      
+        this.boss.body.setSize(this.boss.width, this.boss.height); // 可选：根据图像大小设置碰撞箱
+        
+
         ///Object that player can get 
 
         //the door !have to before set up player!
@@ -76,14 +81,6 @@ class Act1Scene3 extends Phaser.Scene {
         });
         this.physics.world.enable(this.door, Phaser.Physics.Arcade.STATIC_BODY);
 
-        //armor
-        this.armor = this.map.createFromObjects("obj", {
-            name: "armor",
-            key: "tilemap_base_sheet_2",
-            frame: 60
-        });
-        this.physics.world.enable(this.armor, Phaser.Physics.Arcade.STATIC_BODY);
-
         //save point flag
         this.SaveP1 = this.map.createFromObjects("obj", {
             name: "SP1",
@@ -91,26 +88,19 @@ class Act1Scene3 extends Phaser.Scene {
             frame: 112
         });
         this.physics.world.enable(this.SaveP1, Phaser.Physics.Arcade.STATIC_BODY);
+        this.saveGroup = this.add.group(this.SaveP1);
 
-
-        //coins
-        this.coins = this.map.createFromObjects("obj", {
-            name: "coin",
-            key: "tilemap_base_sheet",
-            frame: 151
-        });
-        this.physics.world.enable(this.coins, Phaser.Physics.Arcade.STATIC_BODY);
-        this.coinGroup = this.add.group(this.coins);
 
         //set up savePoint
         //下面为初始出生点
         //this.savePoint = { x: 10392, y: 348};
         //下面是测试出生点
         this.savePoint = { x: 10027, y: 338};
+        //this.savePoint = { x: 427, y: 338};
         //NPC data create
 
         // set up NPCavatar
-        this.npc = this.physics.add.staticSprite(10194, 348, 'NPC_L2').setScale(0.04);
+        this.npc = this.physics.add.staticSprite(10194, 348, 'NPC_L3').setScale(0.04);
 
         this.npc.body.setSize(this.npc.width * 0.04, this.npc.height * 0.04);
         this.npc.body.setOffset(290, 410); 
@@ -132,9 +122,6 @@ class Act1Scene3 extends Phaser.Scene {
             wordWrap: { width: 300 }
         }).setDepth(100).setVisible(false);
 
-        // the enemies
-        this.enemies = this.physics.add.group();
-        this.spawnEnemy(73, 1590);
 
 
         //The player
@@ -204,46 +191,14 @@ class Act1Scene3 extends Phaser.Scene {
             }
         });
 
-        //enemy collision
-        this.physics.add.collider(this.enemies, this.groundLayer, (enemy) => {
-            if (enemy.body.blocked.left) {
-                enemy.setVelocityX(50);
-                enemy.setFlipX(false);
-            } else if (enemy.body.blocked.right) {
-                enemy.setVelocityX(-50);
-                enemy.setFlipX(true);
-            }
-        });
-
-        this.physics.add.overlap(my.sprite.player, this.enemies, (player, enemy) => {
-            this.hurtSound.play();
-            if (!this.armUp) {
-                my.sprite.player.setPosition(this.savePoint.x, this.savePoint.y);
-            }
-            this.enemies.remove(enemy, true, true); 
-        });
 
         //item
 
 
-        //coin
-        this.physics.add.overlap(my.sprite.player, this.coinGroup, (obj1, obj2) => {
-            this.coinSound.play();
-            this.coinSoundPlaying = true;
-            obj2.destroy(); 
-
-            this.score += 50; 
-            this.scoreText.setText('Score: ' + this.score); 
-        });
-
         //save point
-        this.physics.add.overlap(my.sprite.player, this.SaveP1, (obj1, obj2) => {
-            this.savePoint = { x: obj2.x, y: obj2.y};
-            if (this.savepoint1 === 0) {
-                this.saveSound.play();
-                this.savepoint1 = 1;
-            }
-            
+        this.physics.add.overlap(my.sprite.player, this.saveGroup, (player, savePoint) => {
+            this.savePoint = { x: savePoint.x, y: savePoint.y };
+            this.saveSound.play();
         });
 
 
@@ -302,32 +257,13 @@ class Act1Scene3 extends Phaser.Scene {
         });
         this.uiLayer.add(this.scoreText);
 
-        // Timer Text 
-        this.timerText = this.add.text(game.config.width - 150, 10, 'Time: 300', {
-            fontSize: '20px',
-            fill: '#ffffff',
-            stroke: '#000000',
-            strokeThickness: 3,
-            padding: { x: 10, y: 5 },
-            backgroundColor: '#00000066'
-        });
-        this.uiLayer.add(this.timerText);
 
         // count down
         this.timerEvent = this.time.addEvent({
-            delay: 1000,
+            delay: 300,
             callback: () => {
-                this.timeLeft--;
-                this.timerText.setText('Time: ' + this.timeLeft);
-
-                if (this.timeLeft <= 0) {
-                    this.timeLeft = 0;
-                    this.timerEvent.remove(); 
-                    this.sound.stopAll();
-                    this.scene.start('gameOverL', {
-                        target: 'Act1Scene3',
-                    });
-                }
+                this.score ++; 
+                this.scoreText.setText('Score: ' + this.score); 
             },
             callbackScope: this,
             loop: true
@@ -345,16 +281,18 @@ class Act1Scene3 extends Phaser.Scene {
 
         // make camera ignore things other than UI
         this.uiCamera.ignore(my.sprite.player);
-        this.uiCamera.ignore(this.enemies);
         this.uiCamera.ignore(this.door);
-        this.uiCamera.ignore(this.coinGroup);
         this.uiCamera.ignore(this.SaveP1);
         this.uiCamera.ignore(this.npc);
         this.uiCamera.ignore(this.dialogueBox);
+        this.uiCamera.ignore(this.boss);
         this.uiCamera.ignore([my.sprite.player, my.vfx.walking, my.vfx.jumping]);
     }
 
     update() {
+        if (this.boss.x < 495) {
+            this.boss.setVelocityX(0);
+        }
         //posit get (test only)
         console.log(my.sprite.player.x, my.sprite.player.y)
         //console.log('Score:', this.score);
@@ -444,27 +382,7 @@ class Act1Scene3 extends Phaser.Scene {
             my.sprite.player.body.setVelocity(0, 0); 
         }
 
-        //enemy move
-        this.enemies.children.iterate((enemy) => {
-            if (enemy && enemy.body) {
-                if (enemy.body.blocked.left) {
-                    enemy.setVelocityX(50);
-                    enemy.setFlipX(false); 
-                } else if (enemy.body.blocked.right) {
-                    enemy.setVelocityX(-50);
-                    enemy.setFlipX(true);  
-                }
-            }
-        });
-
         
     }
 
-    spawnEnemy(x, y) {
-            let enemy = this.enemies.create(x, y, 'enemy').setScale(1.5).setCollideWorldBounds(true);
-            enemy.setVelocityX(50);
-            enemy.setBounce(0);
-            enemy.setImmovable(true);
-            enemy.setFlipX(true);
-        }
 }
