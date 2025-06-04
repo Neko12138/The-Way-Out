@@ -294,8 +294,13 @@ class Act1Scene2 extends Phaser.Scene {
 
         //h enter
         this.physics.add.overlap(my.sprite.player, this.h_Enter, (obj1, obj2) => {
-            //this.scene.start("Act1SceneUnknown");
-            
+            this.sound.stopAll();
+            this.scene.start('Transfer', {
+                target: 'Act1SceneUnknown',
+                location: '? ? ?',
+                score: this.score,
+                timeLeft: this.timeLeft,
+            });
         });
 
         //debuff
@@ -319,6 +324,13 @@ class Act1Scene2 extends Phaser.Scene {
         //Door
         this.physics.add.overlap(my.sprite.player, this.door, (obj1, obj2) => {
             if (this.Level2_keyHas) {
+                this.sound.stopAll();
+                this.scene.start('Transfer', {
+                    target: 'Act1Scene3',
+                    location: 'Main Entrance',
+                    score: this.score,
+                    timeLeft: this.timeLeft,
+                });
             }
         });
 
@@ -385,6 +397,8 @@ class Act1Scene2 extends Phaser.Scene {
                 if (this.timeLeft <= 0) {
                     this.timeLeft = 0;
                     this.timerEvent.remove(); 
+                    this.sound.stopAll();
+                    this.scene.start('gameOverL');
                 }
             },
             callbackScope: this,
@@ -418,7 +432,7 @@ class Act1Scene2 extends Phaser.Scene {
 
     update() {
         //posit get (test only)
-        console.log(my.sprite.player.x, my.sprite.player.y)
+        //console.log(my.sprite.player.x, my.sprite.player.y)
         //console.log('Score:', this.score);
 
         //player move

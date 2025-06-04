@@ -26,7 +26,7 @@ class Load extends Phaser.Scene {
          // Packed tilemap
         this.load.tilemapTiledJSON("Level1", "Level_1.tmj");   // Tilemap in JSON
         this.load.tilemapTiledJSON("Level2", "Level_2.tmj");   // Tilemap in JSON
-        //this.load.tilemapTiledJSON("platformer-map", "TFR_Map.tmj");   // Tilemap in JSON
+        this.load.tilemapTiledJSON("Level_H", "Level_H.tmj");   // Tilemap in JSON
         //this.load.tilemapTiledJSON("platformer-map", "TFR_Map.tmj");   // Tilemap in JSON
         
 
@@ -52,7 +52,7 @@ class Load extends Phaser.Scene {
         
         this.load.audio('L1BGM', 'L1BGM.mp3');
         this.load.audio('gameOverL', 'gameOverL.mp3');
-        //this.load.audio('debuff', 'mushroom.mp3');
+        this.load.audio('LH_BGM', 'LH_BGM.mp3');
         //this.load.audio('debuff', 'mushroom.mp3');
         //this.load.audio('debuff', 'mushroom.mp3');
         //this.load.audio('debuff', 'mushroom.mp3');
@@ -88,7 +88,7 @@ class Load extends Phaser.Scene {
             frames: [{ key: 'man_jump' }],
         });
 
-         this.scene.start("gameOverL");
+         this.scene.start("Act1Scene2");
     }
 
     update() {

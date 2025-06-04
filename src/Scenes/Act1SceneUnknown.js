@@ -3,7 +3,7 @@ class Act1SceneUnknown extends Phaser.Scene {
         super("Act1SceneUnknown");
     }
 
-    init() {
+    init(data) {
         // variables and settings
         this.ACCELERATION = 1500;
         this.DRAG = 2000;    // DRAG < ACCELERATION = icy slide
@@ -16,16 +16,16 @@ class Act1SceneUnknown extends Phaser.Scene {
         this.savepoint1 = 0;
         this.LevelH_keyCount = 0;
         this.LevelH_keyHas = false;
-        this.score = typeof my.score === 'number' ? my.score : 0;
-        this.timeLeft = typeof my.timeLeft === 'number' ? my.timeLeft : 300;
+        this.score = (data && typeof data.score === 'number') ? data.score : 0;
+        this.timeLeft = (data && typeof data.timeLeft === 'number') ? data.timeLeft : 300;
     }
 
     create() {
         ///////////////////////////////////////////////////////////////////Audio////////////////////////////////////////
         //music
-        //this.playingMusic = this.sound.add('playing');
-        //this.playingMusic.play();
-        //this.playingMusic.setVolume(0.5);
+        this.playingMusic = this.sound.add('LH_BGM');
+        this.playingMusic.play();
+        this.playingMusic.setVolume(0.5);
 
         //sound
         this.walkSound = this.sound.add('walk');
@@ -47,15 +47,10 @@ class Act1SceneUnknown extends Phaser.Scene {
         this.debuffSoundPlaying = false;
 
         /////////////////////////////////////////////////////////////////////////////Create Object(or anything)/////////////////////////////////////////
-        
-        //SP
-
-        this.score += 10000; 
-        this.scoreText.setText('Score: ' + this.score); 
 
         ///The Map
         
-        this.map = this.make.tilemap({ key: "Level2" });
+        this.map = this.make.tilemap({ key: "Level_H" });
 
         let tileset1 = this.map.addTilesetImage("tilemap_packed", "tilemap_tiles");
         let tileset2 = this.map.addTilesetImage("tilemap_packed_base", "tilemap_base");
@@ -101,9 +96,8 @@ class Act1SceneUnknown extends Phaser.Scene {
 
         //set up savePoint
         //下面为初始出生点
-        //this.savePoint = { x: 76, y: 1932};
-        //下面是测试出生点
-        this.savePoint = { x: 456, y: 960};
+        this.savePoint = { x: 76, y: 32};
+
         //NPC data create
 
         // set up player avatar
@@ -142,11 +136,10 @@ class Act1SceneUnknown extends Phaser.Scene {
             obj2.destroy(); 
             this.keySound.play();
 
-            this.Level2_keyCount++;
+            this.LevelH_keyCount++;
 
-            if (this.Level2_keyCount >= 3) {
-                this.Level2_keyHas = true;
-                this.savePoint = { x: 154, y: 125};
+            if (this.LevelH_keyCount >= 3) {
+                this.LevelH_keyHas = true;
             }
 
             this.score += 100; 
@@ -165,7 +158,8 @@ class Act1SceneUnknown extends Phaser.Scene {
 
         //Door
         this.physics.add.overlap(my.sprite.player, this.door, (obj1, obj2) => {
-            if (this.Level2_keyHas) {
+            if (this.LevelH_keyHas) {
+                console.log('成功设置，转移待定')
             }
         });
 
@@ -195,6 +189,7 @@ class Act1SceneUnknown extends Phaser.Scene {
 
         my.vfx.jumping.stop();
 
+
         ////////////////////////////////////////////////////////////////////////UI SETting///////////////////////////////////////////
 
         //create UI Layer
@@ -210,33 +205,6 @@ class Act1SceneUnknown extends Phaser.Scene {
             backgroundColor: '#00000066'
         });
         this.uiLayer.add(this.scoreText);
-
-        // Timer Text 
-        this.timerText = this.add.text(game.config.width - 150, 10, 'Time: 300', {
-            fontSize: '20px',
-            fill: '#ffffff',
-            stroke: '#000000',
-            strokeThickness: 3,
-            padding: { x: 10, y: 5 },
-            backgroundColor: '#00000066'
-        });
-        this.uiLayer.add(this.timerText);
-
-        // count down
-        this.timerEvent = this.time.addEvent({
-            delay: 1000,
-            callback: () => {
-                this.timeLeft--;
-                this.timerText.setText('Time: ' + this.timeLeft);
-
-                if (this.timeLeft <= 0) {
-                    this.timeLeft = 0;
-                    this.timerEvent.remove(); 
-                }
-            },
-            callbackScope: this,
-            loop: true
-        });
 
         // make main cameras ignore UI
         this.cameras.main.ignore(this.uiLayer);
@@ -254,12 +222,14 @@ class Act1SceneUnknown extends Phaser.Scene {
         this.uiCamera.ignore(this.door);
         this.uiCamera.ignore(this.coinGroup);
         this.uiCamera.ignore([my.sprite.player, my.vfx.walking, my.vfx.jumping]);
+
+        this.score += 1000; 
+        this.scoreText.setText('Score: ' + this.score); 
     }
 
     update() {
         //posit get (test only)
-        console.log(my.sprite.player.x, my.sprite.player.y)
-        //console.log('Score:', this.score);
+        //console.log(my.sprite.player.x, my.sprite.player.y)
 
         //player move
         if(cursors.left.isDown) {

@@ -64,7 +64,7 @@
             "selectedLayer": 1,
             "viewCenter": {
                 "x": 277.33333333333326,
-                "y": 1067.3333333333333
+                "y": 1859.3333333333333
             }
         },
         "Level_2.tmj#rock_packed": {
@@ -80,11 +80,11 @@
             "scaleInDock": 1
         },
         "Level_3.tmj": {
-            "scale": 0.6122222222222222,
-            "selectedLayer": 0,
+            "scale": 1.5,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 855.0816696914701,
-                "y": 198.4573502722323
+                "x": 10421.333333333332,
+                "y": 310.66666666666663
             }
         },
         "Level_3.tmj#rock_packed": {
@@ -103,11 +103,11 @@
             "expandedObjectLayers": [
                 3
             ],
-            "scale": 3,
-            "selectedLayer": 2,
+            "scale": 1.5,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 261.16666666666663,
-                "y": 198.16666666666669
+                "x": 225.3333333333333,
+                "y": 194.66666666666666
             }
         },
         "Level_H.tmj#rock_packed": {

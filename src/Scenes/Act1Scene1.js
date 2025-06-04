@@ -387,9 +387,7 @@ class Act1Scene1 extends Phaser.Scene {
 
     update() {
         //posit get (test only)
-        //console.log(my.sprite.player.x, my.sprite.player.y)
-        //console.log('Score:', this.score);
-
+        
         //player move
         if(cursors.left.isDown) {
 
