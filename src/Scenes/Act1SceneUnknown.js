@@ -95,7 +95,6 @@ class Act1SceneUnknown extends Phaser.Scene {
         this.coinGroup = this.add.group(this.coins);
 
         //set up savePoint
-        //下面为初始出生点
         this.savePoint = { x: 76, y: 32};
 
         //NPC data create
@@ -234,8 +233,6 @@ class Act1SceneUnknown extends Phaser.Scene {
     }
 
     update() {
-        //posit get (test only)
-        //console.log(my.sprite.player.x, my.sprite.player.y)
 
         //player move
         if(cursors.left.isDown) {

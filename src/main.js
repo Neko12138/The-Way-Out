@@ -20,7 +20,7 @@ let config = {
     },
     width: 1024,
     height: 768,
-    scene: [ Load, Transfer, Act1Scene1, Act1Scene2, Act1Scene3, Act1SceneUnknown, gameOverL, gameOverW, gameStart, ini ],  
+    scene: [ ini, Load, Transfer, Act1Scene1, Act1Scene2, Act1Scene3, Act1SceneUnknown, gameOverL, gameOverW, gameStart,  ],  
     plugins: {
         scene: [
             { key: 'AnimatedTiles', plugin: window.AnimatedTiles, mapping: 'animatedTiles' }

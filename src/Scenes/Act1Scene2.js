@@ -448,8 +448,6 @@ class Act1Scene2 extends Phaser.Scene {
     }
 
     update() {
-        //posit get (test only)
-
         //player move
         if(cursors.left.isDown) {
 
