@@ -15,23 +15,23 @@ class gameStart extends Phaser.Scene {
         const centerX = this.cameras.main.width / 2;
         const centerY = this.cameras.main.height / 2;
 
-        let player = this.add.sprite(600, 250, 'platformer_characters');
-        player.setScale(4);
+        let player = this.add.sprite(550, 250, 'platformer_characters');
+        player.setScale(15);
         player.setOrigin(0.5);
         player.play('idle');
         player.setFlipX(true); 
 
         // title
-        this.titleHunt = this.add.text(centerX - 250, centerY - 190, 'The Fact    ry', {
+        this.titleHunt = this.add.text(centerX - 290, centerY , 'THE WAY OUT', {
             fontFamily: 'Impact, Arial Black, sans-serif',
             fontSize: '120px',
-            color: '#808080', 
+            color: '#FFD700', 
             align: 'center'
         });
-        this.titleDuck = this.add.text(centerX - 110, centerY - 60, 'Redemption', {
-            fontFamily: 'Impact, Arial Black, sans-serif',
-            fontSize: '100px',
-            color: '#DAA520', 
+        this.titleDuck = this.add.text(centerX + 230, centerY + 160, 'by Wade Xu', {
+            fontFamily: 'Arial Black, sans-serif',
+            fontSize: '40px',
+            color: '#FFFFFF', 
             align: 'center'
         });
 
