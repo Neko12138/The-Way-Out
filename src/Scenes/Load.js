@@ -88,7 +88,8 @@ class Load extends Phaser.Scene {
             frames: [{ key: 'man_jump' }],
         });
 
-         this.scene.start("gameStart");
+         //this.scene.start("gameStart");
+         this.scene.start("Act1Scene3");
     }
 
     update() {

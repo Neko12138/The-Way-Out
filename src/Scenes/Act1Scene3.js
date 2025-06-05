@@ -195,6 +195,7 @@ class Act1Scene3 extends Phaser.Scene {
                     this.playingMusic.play();
 
                     my.sprite.player.setPosition(10027, 338);
+                    this.savePoint = { x: 10027, y: 338 };
                     my.sprite.player.body.setVelocity(0, 0);
                 } else {
                     this.dialogueBox.setText(this.dialogue[this.dialogueIndex]);
@@ -311,6 +312,12 @@ class Act1Scene3 extends Phaser.Scene {
             } else {
                 this.boss.setVelocityX(0);
             }
+        }
+        if (this.boss.x < my.sprite.player.x) {
+            this.sound.stopAll();
+            this.scene.start('gameOverL', {
+                target: 'Act1Scene3'
+            });
         }
 
         //player move
